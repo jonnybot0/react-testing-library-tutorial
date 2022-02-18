@@ -1,46 +1,29 @@
 import * as React from 'react'
-import {fireEvent, render, screen} from '@testing-library/react'
+import axios from 'axios'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App, {Search} from "../main/App"
+import App from "../main/App";
+
+jest.mock('axios')
+const moxios = jest.mocked(axios, true)
 
 describe('App', () => {
-    test('renders App component', async () => {
+    test('fetches stories from an API and displays them', async () => {
+        const stories = [
+            { objectID: '1', title: 'Hello' },
+            { objectID: '2', title: 'React' },
+        ]
+
+        moxios.get.mockImplementationOnce(() =>
+            Promise.resolve({ data: { hits: stories } })
+        )
+
         render(<App />)
 
-        expect(screen.queryByText(/Signed in as/)).toBeNull()
+        await userEvent.click(screen.getByRole('button'))
 
-        expect(await screen.findByText(/Signed in as/)).toBeInTheDocument()
-    })
+        const items = await screen.findAllByRole('listitem')
 
-    test('event firing', async () => {
-        render(<App />)
-
-        expect(screen.queryByText(/Searches for JavaScript/)).toBeNull()
-
-        await userEvent.type(screen.getByRole('textbox'), 'JavaScript')
-
-        expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument()
-    })
-
-    describe('Search', () => {
-        test('calls the onChange callback handler', async () => {
-            const onChange = jest.fn()
-
-            render(
-                <Search value="" onChange={onChange}>
-                    Search:
-                </Search>
-            )
-
-            fireEvent.change(screen.getByRole('textbox'), {
-                target: { value: 'JavaScript' },
-            })
-
-            expect(onChange).toHaveBeenCalledTimes(1)
-
-            await userEvent.type(screen.getByRole('textbox'), 'JavaScript')
-
-            expect(onChange).toHaveBeenCalledTimes(11)
-        })
+        expect(items).toHaveLength(2)
     })
 })
