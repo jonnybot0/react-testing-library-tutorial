@@ -1,7 +1,8 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 
 import App from '../main/App';
+import userEvent from "@testing-library/user-event";
 
 describe('App', () => {
     test('renders App component', async () => {
@@ -11,15 +12,13 @@ describe('App', () => {
         expect(await screen.findByText(/Signed in as/)).toBeInTheDocument()
     });
 
-    test('renders App component', () => {
-        render(<App />);
+    test('event firing', async () => {
+        render(<App />)
 
         expect(screen.queryByText(/Searches for JavaScript/)).toBeNull()
 
-        fireEvent.change(screen.getByRole('textbox'), {
-            target: { value: 'JavaScript' },
-        })
+        await userEvent.type(screen.getByRole('textbox'), 'JavaScript')
 
         expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument()
-    });
+    })
 });
