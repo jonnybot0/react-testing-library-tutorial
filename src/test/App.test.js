@@ -15,5 +15,7 @@ describe('App', () => {
 
         // fails, despite what the blog says, because multiple things match Search
         // expect(screen.getByText(/Search/)).toBeInTheDocument();
+
+        expect(screen.getByRole('textbox')).toBeInTheDocument()
     });
 });
