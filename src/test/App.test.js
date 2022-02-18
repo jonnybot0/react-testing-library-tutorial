@@ -3,22 +3,28 @@ import {render, screen} from '@testing-library/react';
 
 import App from '../main/App';
 import userEvent from "@testing-library/user-event";
+import axios from 'axios'
+
+jest.mock('axios')
 
 describe('App', () => {
-    test('renders App component', async () => {
-        render(<App />);
-        expect(screen.queryByText(/Signed in as/)).toBeNull()
+    test('fetches stories from an API and displays them', async () => {
+        const stories = [
+            { objectID: '1', title: 'Hello' },
+            { objectID: '2', title: 'React' },
+        ]
 
-        expect(await screen.findByText(/Signed in as/)).toBeInTheDocument()
-    });
+        axios.get.mockImplementationOnce(() =>
+            Promise.resolve({ data: { hits: stories } })
+        )
 
-    test('event firing', async () => {
         render(<App />)
 
-        expect(screen.queryByText(/Searches for JavaScript/)).toBeNull()
+        await userEvent.click(screen.getByRole('button'))
 
-        await userEvent.type(screen.getByRole('textbox'), 'JavaScript')
+        const items = await screen.findAllByRole('listitem')
 
-        expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument()
+        expect(items).toHaveLength(2)
     })
-});
+})
+
