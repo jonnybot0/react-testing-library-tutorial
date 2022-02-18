@@ -4,6 +4,7 @@
     "lib": [ "esnext", "dom", "dom.iterable" ],
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5"
-  },
+    "target": "es5",
+    "types": [ "node", "jest", "@testing-library/jest-dom" ]
+  }
 }

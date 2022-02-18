@@ -18,6 +18,10 @@ export default {
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
 
+  setupFilesAfterEnv: [
+    "<rootDir>/src/test/setupTest.ts"
+  ],
+
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
   //   "/node_modules/"
