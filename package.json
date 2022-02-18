@@ -1,0 +1,9 @@
+{
+  "name": "rtl-tutorial",
+  "version": "1.0.0",
+  "description": "Run through Robin Wieruch's tutorial for the React Testing Library",
+  "main": "index.js",
+  "author": "Jonny Carter",
+  "license": "UNLICENSED",
+  "private": true
+}
