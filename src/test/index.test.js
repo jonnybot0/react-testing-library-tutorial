@@ -1,3 +1,7 @@
+function sum(x, y) {
+    return x + y;
+}
+
 describe('true is truthy and false is falsy', () => {
     test('true is truthy', () => {
         expect(true).toBe(true);
@@ -5,5 +9,11 @@ describe('true is truthy and false is falsy', () => {
 
     test('false is falsy', () => {
         expect(false).toBe(false);
+    });
+});
+
+describe('sum', () => {
+    test('sums up two values', () => {
+        expect(sum(2, 4)).toBe(6);
     });
 });
