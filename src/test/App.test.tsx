@@ -6,6 +6,14 @@ describe('App', () => {
     test('renders App component', () => {
         render(<App />);
 
-        expect(screen.getByText('Search:')).toBeInTheDocument()
+
+        // fails
+        //expect(screen.getByText('Search')).toBeInTheDocument();
+
+        // succeeds
+        expect(screen.getByText('Search:')).toBeInTheDocument();
+
+        // Fails because regex returns multiple elements
+        // expect(screen.getByText(new RegExp(/Search/))).toBeInTheDocument()
     });
 });
