@@ -17,5 +17,6 @@ describe('App', () => {
         // expect(screen.getByText(new RegExp(/Search/))).toBeInTheDocument()
 
         expect(screen.getByRole('textbox')).toBeInTheDocument()
+        expect(screen.queryByText(/Searches for JavaScript/)).toBeNull()
     });
 });
