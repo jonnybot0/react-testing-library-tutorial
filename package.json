@@ -5,5 +5,12 @@
   "main": "index.js",
   "author": "Jonny Carter",
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "react-test-renderer": "^17.0.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2"
+  }
 }
