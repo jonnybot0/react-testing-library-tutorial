@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {fireEvent, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from "../main/App"
+import App, {Search} from "../main/App"
 
 describe('App', () => {
     test('renders App component', async () => {
@@ -20,5 +20,27 @@ describe('App', () => {
         await userEvent.type(screen.getByRole('textbox'), 'JavaScript')
 
         expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument()
+    })
+
+    describe('Search', () => {
+        test('calls the onChange callback handler', async () => {
+            const onChange = jest.fn()
+
+            render(
+                <Search value="" onChange={onChange}>
+                    Search:
+                </Search>
+            )
+
+            fireEvent.change(screen.getByRole('textbox'), {
+                target: { value: 'JavaScript' },
+            })
+
+            expect(onChange).toHaveBeenCalledTimes(1)
+
+            await userEvent.type(screen.getByRole('textbox'), 'JavaScript')
+
+            expect(onChange).toHaveBeenCalledTimes(11)
+        })
     })
 })
