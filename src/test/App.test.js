@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import App from '../main/App';
 
@@ -7,9 +7,19 @@ describe('App', () => {
     test('renders App component', async () => {
         render(<App />);
         expect(screen.queryByText(/Signed in as/)).toBeNull()
-        screen.debug()
 
         expect(await screen.findByText(/Signed in as/)).toBeInTheDocument()
-        screen.debug()
+    });
+
+    test('renders App component', () => {
+        render(<App />);
+
+        expect(screen.queryByText(/Searches for JavaScript/)).toBeNull()
+
+        fireEvent.change(screen.getByRole('textbox'), {
+            target: { value: 'JavaScript' },
+        })
+
+        expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument()
     });
 });
