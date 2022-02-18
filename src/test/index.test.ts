@@ -1,6 +1,4 @@
-function sum(x, y) {
-    return x + y;
-}
+import {sum} from "../main/sum";
 
 describe('true is truthy and false is falsy', () => {
     test('true is truthy', () => {
