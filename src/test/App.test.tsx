@@ -15,5 +15,7 @@ describe('App', () => {
 
         // Fails because regex returns multiple elements
         // expect(screen.getByText(new RegExp(/Search/))).toBeInTheDocument()
+
+        expect(screen.getByRole('textbox')).toBeInTheDocument()
     });
 });
