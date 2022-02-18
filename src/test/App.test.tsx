@@ -2,7 +2,7 @@ import * as React from 'react'
 import axios from 'axios'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from "../main/App";
+import App from "../main/App"
 
 jest.mock('axios')
 const moxios = jest.mocked(axios, true)
@@ -25,5 +25,19 @@ describe('App', () => {
         const items = await screen.findAllByRole('listitem')
 
         expect(items).toHaveLength(2)
+    })
+
+    test('fetches stories from an API and fails', async () => {
+        moxios.mockImplementationOnce(() =>
+            Promise.reject(new Error())
+        )
+
+        render(<App />)
+
+        await userEvent.click(screen.getByRole('button'))
+
+        const message = await screen.findByText(/Something went wrong/)
+
+        expect(message).toBeInTheDocument()
     })
 })
