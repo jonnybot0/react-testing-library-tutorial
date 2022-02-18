@@ -4,19 +4,12 @@ import { render, screen } from '@testing-library/react';
 import App from '../main/App';
 
 describe('App', () => {
-    test('renders App component', () => {
+    test('renders App component', async () => {
         render(<App />);
+        expect(screen.queryByText(/Signed in as/)).toBeNull()
+        screen.debug()
 
-        // fails
-        //expect(screen.getByText('Search')).toBeInTheDocument();
-
-        // succeeds
-        expect(screen.getByText('Search:')).toBeInTheDocument();
-
-        // fails, despite what the blog says, because multiple things match Search
-        // expect(screen.getByText(/Search/)).toBeInTheDocument();
-
-        expect(screen.getByRole('textbox')).toBeInTheDocument()
-        expect(screen.queryByText(/Searches for JavaScript/)).toBeNull()
+        expect(await screen.findByText(/Signed in as/)).toBeInTheDocument()
+        screen.debug()
     });
 });
